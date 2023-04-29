@@ -7,21 +7,23 @@ from dotenv import load_dotenv
 from PIL import Image
 
 
-def download_image(url, file_path):
-    """
-    Downloads an image from the given URL and saves it to the specified file path.
-
-    :param url: The URL of the image to download.
-    :type url: str
-    :param file_path: The file path to save the downloaded image to.
-    :type file_path: str
-    """
-    # send a get request to the URL
+def download_image(url):
     response = requests.get(url)
-    # open a file for writing
-    with open(file_path, 'wb') as f:
-        # write the contents of the response to the file
-        f.write(response.content)
+    return response.content
+
+def save_image(content, file_name):
+    with open(file_name, 'wb') as f:
+        f.write(content)
+
+def pad_image(img_path, color=(255, 255, 255)):
+    im = Image.open(img_path)
+    width, height = im.size
+    if width == height: 
+        return im
+    max_dim = max(width, height)
+    pad_img = Image.new(im.mode, (max_dim, max_dim), color)
+    pad_img.paste(im, ((max_dim - width) // 2, (max_dim - height) // 2))
+    return pad_img
 
 def download_data_export(filename = "cleaned_export.csv"):
     """
@@ -99,3 +101,4 @@ def pad(im, color):
         pad_img.paste(im, ((height - width)//2, 0))
     
     return pad_img
+

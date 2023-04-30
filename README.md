@@ -39,7 +39,7 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-5.    Create a .env file in the root directory of the repository to store your database access credentials. Replace your_username, your_password, and your_url with the actual values.
+5.    Create a `.env` file in the root directory of the repository to store your database access credentials. Replace your_username, your_password, and your_url with the actual values.
 
 ```makefile
 dp_export_username=your_username

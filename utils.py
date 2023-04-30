@@ -102,3 +102,34 @@ def pad(im, color):
     
     return pad_img
 
+def specimen_train_test_split(d):
+    """
+    Splits the input DataFrame `d` into two subsets based on the unique values
+    of the 'specimen' column. Approximately 80% of the unique specimens are
+    included in the training set, and the remaining 20% are included in the
+    test set. Returns two DataFrames: `train_df` and `test_df`.
+
+    Args:
+        d (pandas.DataFrame): Input DataFrame to split.
+
+    Returns:
+        tuple: A tuple of two DataFrames: `train_df` and `test_df`.
+
+    Example:
+        >>> specimen_train_test_split(my_dataframe)
+        (train_df, test_df)
+    """
+    df_specimen = d.specimen.unique().tolist();
+    random.shuffle(df_specimen)
+
+    train = df_specimen
+
+    train_list = train[:int(len(train)*0.8)]
+    test_list = train[int(len(train)*0.8):]
+    print("train_list length:", len(train_list))
+    print("test_list length:", len(test_list))
+    
+    train_df = d[d['specimen'].isin(train_list)].copy().reset_index()
+    test_df = d[d['specimen'].isin(test_list)].copy().reset_index()
+    
+    return train_df, test_df

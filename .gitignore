@@ -1,3 +1,5 @@
 *.jpg
 *.png
 .env
+.csv
+__pycache__/
